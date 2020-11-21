@@ -6,7 +6,7 @@
             <div class="latest-products">
                 <div class="section-heading">
                     <h2>Все продукты</h2>
-                    <a href="#">Показать все продукты <i class="fa fa-angle-right"></i></a>
+                    <a href="{{route('index')}}">Показать все продукты <i class="fa fa-angle-right"></i></a>
                 </div>
             </div>
         </div>

@@ -39,7 +39,7 @@ class Order extends Model
 
     public static function changeFullSum($changeSum)
     {
-        $sum=self::getFullSum()+$changeSum;
+        $sum=self::getFullSum() + $changeSum;
         session(['full_order_sum' => $sum]);
 
     }

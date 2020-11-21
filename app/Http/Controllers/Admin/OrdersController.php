@@ -29,12 +29,15 @@ class OrdersController extends Controller
         return view('auth.orders.index', compact('orders'));
     }
 
+
     public function show($id)
     {
         $order=Order::where('id', $id)->first();
-        $products=$order->products()->withTrashed()->get();
+        
         return view('auth.orders.show', compact('order'));
     }
+    
+
 
     public function executeOrder($orderId)
     {

@@ -51,8 +51,6 @@ class ProductController extends Controller
             $data['code'] = Str::slug($data['name'], '-');
         }
 
-        //переопределение значения чекбокса с 'on' на 1 в мутаторе, который лежит в модели
-
         if ($request->has('image')){
         //получение пути к файлу и сохранение (store) в папку
         $path=$request->file('image')->store('products');
@@ -60,6 +58,7 @@ class ProductController extends Controller
         $data['image']=$path;
         }
 
+        //переопределение значения чекбокса с 'on' на 1 в мутаторе, который лежит в модели
         //создаем новую запись
         $success=Product::create($data);
         if ($success){

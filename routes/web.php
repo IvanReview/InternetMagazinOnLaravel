@@ -45,7 +45,6 @@ Route::middleware(['auth'])->group(function (){
 
 });
 
-
 //Корзина
 Route::post('/basket/add/{product}','BasketController@basketAdd')->name('basket-add');
 Route::group(['middleware' => 'basket_not_empty', 'prefix'=>'basket' ], function () {

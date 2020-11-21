@@ -49,7 +49,9 @@
                                 <option value="{{ $category->id }}"
                                         @if($product->category_id == $category->id)
                                              selected
-                                        @endif>{{ $category->name }}</option>
+                                        @endif>
+                                        {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>

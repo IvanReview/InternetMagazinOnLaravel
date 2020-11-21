@@ -77,15 +77,12 @@ class BasketController extends Controller
     {
         $basket = new basketRepository(true);
         $result = $basket->addProduct($product);
-        //чило товаров в заказе
-        $count = $basket->getOrder()->products()->count();
-
+        
         if ($result){
             session()->flash('success', 'Добавлен товар '. $product->name);
         } else{
             session()->flash('warning', 'Товар '. $product->name. ' кончился' );
         }
-       /* return response()->json([ 'data'=>$count]);*/
 
         return redirect()->route('basket');
     }
@@ -103,7 +100,6 @@ class BasketController extends Controller
 
         session()->flash('warning', 'Товар удален '.$product->name);
 
-      /*  return response()->json([ 'data'=>[1,2,6]]);*/
 
         return redirect()->route('basket');
     }

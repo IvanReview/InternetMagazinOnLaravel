@@ -25,6 +25,8 @@ class BasketRepository
     public function __construct($createOrder = false)
     {
         $orderId = session('orderId');
+    
+        //Если корзина пустая
         if (is_null($orderId) && $createOrder) {
             //проверяем авторезирован ли пользователь и добавляем id в таблицу
             $data = [];
@@ -35,9 +37,11 @@ class BasketRepository
             $this->order = Order::create($data);
             session(['orderId' => $this->order->id]);
         } else {
-            //если в корзине есть продукты или что-то добавлялось в корзину, выбирам объект модели(order) по id
-            $this->order = Order::find($orderId);
+        
+            //если в корзине есть продукты или что-то добавлялось в корзину, выбирам объект модели(order) по id 
+            $this->order =  Order::find($orderId);
         }
+
     }
 
     /**
@@ -61,6 +65,7 @@ class BasketRepository
             //получаем доступ к промежуточной таблице и увеличиваем столбец count
             $pivotRow = $this->order->products()->where('product_id', $product->id)->first()->pivot;
             $pivotRow->count++;
+            //Если чило запрашиваемого товара больше чем есть
             if ($pivotRow->count > $product->count){
                 return false;
             }
@@ -94,7 +99,9 @@ class BasketRepository
                 $pivotRow->count--;
                 $pivotRow->update();
             }
+
         }
+    
         Order::changeFullSum(-$product->price);
     }
 
@@ -104,7 +111,7 @@ class BasketRepository
         foreach ($this->order->products as $productInOrder){
             //количество товара в заказе
             $count = $this->order->products()->where('product_id', $productInOrder->id)->first()->pivot->count;
-            //если число товаров в заказе больше чем есть товаров
+            //если число товаров в заказе больше чем есть товаров на складе
             if ($count > $productInOrder->count){
                 return false;
             }

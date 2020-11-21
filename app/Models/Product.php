@@ -21,11 +21,12 @@ class Product extends Model
     public function getPriceForCount()
     {
         if (!is_null($this->pivot)){
-            $totalPrice=$this->pivot->count * $this->price;
+            $totalPrice = $this->pivot->count * $this->price;
             return $totalPrice;
         }
         return $this->price;
     }
+
 
     public function isAvailable()
     {

@@ -25,7 +25,7 @@ class ProductsRequest extends FormRequest
     {
         $rules=  [
             'name'          => 'required|min:5|max:100',
-            'code'          => 'max:200|unique:categories,code',
+            'code'          => 'max:200|unique:products,code',
             'description'   => 'required|string|max:500|min:2',
             'price'         => 'required|numeric|min:1',
             'count'         => 'required|numeric|min:0'
@@ -43,7 +43,8 @@ class ProductsRequest extends FormRequest
     {
         return [
             'name' => 'Название',
-            'description'=> 'Описание'
+            'description'=> 'Описание',
+            'code'=> 'Код'
         ];
     }
 
@@ -52,7 +53,7 @@ class ProductsRequest extends FormRequest
         return [
             'required'      =>  'Поле :attribute обязательно для заполнения',
             'min'           =>  'Поле :attribute должно иметь минимум :min символа',
-            'unique'        =>  'Поле :attribute должно быть уникадльным'
+            'unique'        =>  'Поле :attribute должно быть уникальным'
         ];
     }
 }

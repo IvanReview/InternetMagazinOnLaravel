@@ -1,5 +1,5 @@
 /*
-
+//Добавление в корзину
 let number = 1;
 
 let forms = document.querySelectorAll('#addProduct');
@@ -32,7 +32,7 @@ for (let formData of forms ) {
             });
     });
 }
-
+//Удаление из корзины
 let formsDel = document.querySelectorAll('#delProduct');
 
 for (let formData of formsDel ) {
@@ -54,3 +54,4 @@ for (let formData of formsDel ) {
     });
 }
 */
+
