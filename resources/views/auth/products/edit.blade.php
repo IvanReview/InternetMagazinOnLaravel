@@ -37,8 +37,17 @@
                                value="@isset($product){{ $product->name }}@endisset">
                     </div>
                 </div>
+                <br>
 
-                    <br>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Название en: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layout.error', ['fieldName' => 'name_en'])
+                        <input type="text" class="form-control" name="name_en" id="name"
+                               value="@isset($product){{ $product->name }}@endisset">
+                    </div>
+                </div>
+                <br>
 
                 <div class="form-group row">
                     <label for="category_id" class="col-sm-2 col-form-label">Категория: </label>
@@ -64,6 +73,14 @@
                     <div class="col-sm-6">
                         @include('auth.layout.error', ['fieldName' => 'description'])
                         <textarea name="description" id="description" cols="72" rows="7">{{ $product->description }}</textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Описание en: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layout.error', ['fieldName' => 'description_en'])
+                        <textarea name="description_en" id="description" cols="72" rows="7">{{ $product->description }}</textarea>
                     </div>
                 </div>
                 <br>

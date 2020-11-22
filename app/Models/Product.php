@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Translatable;
+use App\Repositories\CurrencyConversion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Translatable;
+
 
     protected $guarded = [
         '_token'
@@ -72,6 +75,17 @@ class Product extends Model
     public function setRecommendAttribute($value)
     {
         $this->attributes['recommend'] = $value ? 1 : 0;
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return round(CurrencyConversion::convert($value), 2);
+    }
+
+    public function getCurrencyAttribute()
+    {
+        return session('currency', 'RUB');
+
     }
 
 

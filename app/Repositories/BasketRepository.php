@@ -25,7 +25,7 @@ class BasketRepository
     public function __construct($createOrder = false)
     {
         $orderId = session('orderId');
-    
+
         //Если корзина пустая
         if (is_null($orderId) && $createOrder) {
             //проверяем авторезирован ли пользователь и добавляем id в таблицу
@@ -37,8 +37,8 @@ class BasketRepository
             $this->order = Order::create($data);
             session(['orderId' => $this->order->id]);
         } else {
-        
-            //если в корзине есть продукты или что-то добавлялось в корзину, выбирам объект модели(order) по id 
+
+            //если в корзине есть продукты или что-то добавлялось в корзину, выбирам объект модели(order) по id
             $this->order =  Order::find($orderId);
         }
 
@@ -101,7 +101,7 @@ class BasketRepository
             }
 
         }
-    
+
         Order::changeFullSum(-$product->price);
     }
 

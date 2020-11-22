@@ -37,6 +37,15 @@
                         </div>
                     </div>
                     <br>
+                    <div class="form-group">
+                        <div>
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <label for="name" >Название en: </label>
+                            <input type="text" class="form-control" name="name_en" id="name" value="{{ $category->name_en }}">
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div>
@@ -44,7 +53,19 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <label for="description" >Описание: </label>
-                            <textarea name="description" class="form-control" id="description" cols="72" rows="7">{{ $category->description }}</textarea>
+                            <textarea name="description" class="form-control" id="description" cols="72" rows="7">{{ $category->description }}
+                            </textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <div>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <label for="description" >Описание en: </label>
+                            <textarea name="description_en" class="form-control" id="description" cols="72" rows="7">{{ $category->description_en }}
+                            </textarea>
                         </div>
                     </div>
                     <br>

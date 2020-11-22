@@ -21,7 +21,7 @@
                         <td>
                             <a href="{{route('product',[$product->category->code,$product->id])}}">
                                 <img height="56px" src="{{Storage::url($product->image)}}">
-                                {{$product->name}}
+                                {{$product->__('name')}}
                             </a>
                         </td>
                         <td><span class="badge badge-secondary" id="basketCount">{{$product->pivot->count}}</span>
@@ -38,7 +38,7 @@
                                 </form>
                             </div>
                         </td>
-                        <td>{{$product->price}} ₽</td>
+                        <td>{{$product->price}} {{App\Repositories\CurrencyConversion::getCurrencySymbol()}}</td>
                        {{-- Общая стоимость--}}
                         <td>{{$product->getPriceForCount()}}</td>
                     </tr>

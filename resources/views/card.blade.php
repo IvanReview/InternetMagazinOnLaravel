@@ -11,11 +11,11 @@
                 <span class="badge badge-danger">Хит</span>
             @endif
         </div>
-        <a href="#"><img src="{{Storage::url($product->image)}}" alt="" style="width: 250px; height: 250px"></a>
+        <a href="#"><img src="{{Storage::url($product->image)}}" alt="{{$product->__('name')}}" style="width: 250px; height: 250px"></a>
         <div class="down-content">
-            <a href="#"><h4>{{$product->name}}</h4></a>
-            <h6>$ {{$product->price}}</h6>
-            <p>{{Str::limit($product->description, 50)}}</p>
+            <a href="#"><h4>{{$product->__('name')}}</h4></a>
+            <h6> {{$product->price}} {{App\Repositories\CurrencyConversion::getCurrencySymbol()}}</h6>
+            <p>{{Str::limit($product->__('description'), 50)}}</p>
 
             <form action="{{route('basket-add', $product->id)}}" method="POST" id="addProduct">
                 @if($product->isAvailable())

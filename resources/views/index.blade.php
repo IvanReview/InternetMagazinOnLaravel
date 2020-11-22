@@ -20,17 +20,20 @@
                 <div class="col-sm-2 col-md-2 form-check">
                     <label for="hit">
                         <input class="form-check-input" type="checkbox" name="hit" id="hit" @if(request()->has('hit')) checked @endif>
-                    Хитяра </label>
+                        @lang('main.properties.hit')
+                    </label>
                 </div>
                 <div class="col-sm-2 col-md-2 form-check">
                     <label for="new">
                         <input class="form-check-input" type="checkbox" name="new" id="new" @if(request()->has('new')) checked @endif >
-                    Новинка </label>
+                        @lang('main.properties.new')
+                    </label>
                 </div>
                 <div class=" col-sm-2 col-md-2 form-check">
                     <label for="recommend">
                         <input class="form-check-input" type="checkbox" name="recommend" id="recommend" @if(request()->has('recommend')) checked @endif>
-                        Рекомендуем</label>
+                        @lang('main.properties.recommend')
+                    </label>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <button type="submit" class="btn btn-primary">Фильтр</button>

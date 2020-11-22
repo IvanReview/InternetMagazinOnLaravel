@@ -56,7 +56,7 @@ class BasketController extends Controller
         $success = (new basketRepository())->saveOrderBasket($request->name, $request->phone, $email);
 
         if ($success) {
-            session()->flash('success', 'Ваш заказ принят в обработку');
+            session()->flash('success', __('basket.order_confirmed'));
         } else {
             session()->flash('warning', 'Mistake!!');
         }
@@ -77,7 +77,7 @@ class BasketController extends Controller
     {
         $basket = new basketRepository(true);
         $result = $basket->addProduct($product);
-        
+
         if ($result){
             session()->flash('success', 'Добавлен товар '. $product->name);
         } else{

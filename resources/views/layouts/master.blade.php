@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@yield('title')</title>
+    <title>@lang('main.online_shop')  @yield('title')</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script
@@ -27,26 +27,37 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="/"><h2>Sixteen <em>Technics</em></h2></a>
+            <a class="navbar-brand" href="/"><h2>{{--Sixteen <em>Technics</em>--}} @lang('main.online_shop')</h2></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li @routeactive('index') class="nav-item" >
-                        <a class="nav-link" href="{{route('index')}}">Все товары
+                    <li {{--@routeactive('index')--}} class="nav-item" >
+                        <a class="nav-link" href="{{route('index')}}">{{__('main.all_products')}}
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li @routeactive('categories') class="nav-item">
-                        <a class="nav-link" href="{{route('categories')}}">Категории</a>
+                    <li {{--@routeactive('categories')--}} class="nav-item">
+                        <a class="nav-link" href="{{route('categories')}}">@lang('main.categories')</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('locale',__('main.set_lang'))}}"> @lang('main.set_lang')</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('basket')}}"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                            Корзина<span class="cart">
-                                @if(isset($order->products) && $order->products()->count()>0)
-                                    ({{$order->products()->count()}}) @else{{""}}
-                                @endif</span></a>
+                            @lang('main.cart')<span class="cart"></span>
+                        </a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{session('currency')}}
+                        </a>
+                        <div class="dropdown-menu">
+                            @foreach(\App\Models\Currency::get() as $currency)
+                                <a class="dropdown-item" href="{{route('currency', $currency->code)}}">{{$currency->symbol}}</a>
+                            @endforeach
+                        </div>
                     </li>
 
                     @auth {{--проверяет залогирован ли пользователь--}}

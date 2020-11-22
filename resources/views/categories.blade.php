@@ -6,9 +6,9 @@
             <div class="panel" style="margin-top: 80px">
                 <a href="{{route('category', $category->code)}}">
                     <img src="{{Storage::url($category->image)}}" style="width: 200px">
-                    <h2 style="color: #000">{{$category->name}}</h2>
+                    <h2 style="color: #000">{{$category->__('name')}}</h2>
                 </a>
-                <p style="color: #606f7b ">{{$category->description}}</p>
+                <p style="color: #606f7b ">{{$category->__('description')}}</p>
             </div>
         @endforeach
 
