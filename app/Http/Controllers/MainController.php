@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Sku;
 use App\Models\Subscription;
 use App\Repositories\BasketRepository;
 use App\Repositories\CurrencyRates;
@@ -20,21 +21,25 @@ class MainController extends Controller
 
     public function index(Request $request)
     {
+        $skusQuery = Sku::query();
 
-        $productsFiltered = Product::with('category');// возвращается объект билдера  к которому можно применить условия для поиска и уже потом метод пагинейт
+        /*$productsFiltered = Product::with('category');// возвращается объект билдера  к которому можно применить условия для поиска и уже потом метод пагинейт
 
         //фильтры
-        $products = (new FilterRepository($productsFiltered, $request))->apply()->paginate(6);
+        $products = (new FilterRepository($productsFiltered, $request))->apply()->paginate(6);*/
 
-        return view('index', compact('products'));
+        //categories в шаблон мастер грузятся из провайдера ViewServiceProvider
+
+        $skus = $skusQuery->paginate(6);
+        return view('index', compact('skus' ));
     }
 
 
     //отображение всех категорий
     public function categories()
     {
-        $categories=Category::get();
-        return view('categories', compact('categories'));
+        // категории берутся  из ViewServiceProvider
+        return view('categories');
     }
 
 

@@ -16,9 +16,25 @@ class Product extends Model
         '_token'
     ];
 
+    /*protected $fillable = ['name', 'name_en', 'code', 'description', 'description_en',
+        'category_id', 'hit', 'new', 'recommend', 'image', ];*/
+
     public function category(){
         return  $this->belongsTo(Category::class);
     }
+
+    public function skus()
+    {
+        return  $this->hasMany(Sku::class);
+    }
+
+    public function properties()
+    {
+        return  $this->belongsToMany(Property::class, 'property_product')->withTimestamps();
+    }
+
+
+
 
     //подсчет общей стоимости (количество) одного товара
     public function getPriceForCount()
@@ -34,7 +50,6 @@ class Product extends Model
     public function isAvailable()
     {
         return $this->count > 0;
-
     }
 
 

@@ -51,10 +51,10 @@
                     </li>
                     <li class="dropdown nav-item">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{session('currency')}}
+                            {{$currencySymbol}}
                         </a>
                         <div class="dropdown-menu">
-                            @foreach(\App\Models\Currency::get() as $currency)
+                            @foreach($currencies as $currency)
                                 <a class="dropdown-item" href="{{route('currency', $currency->code)}}">{{$currency->symbol}}</a>
                             @endforeach
                         </div>
@@ -107,10 +107,23 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="inner-content">
-                    <p>Copyright &copy; 2020 Sixteen Company</p>
-                </div>
+            <div class="col-md-6"><p>Категория товаров</p>
+                <ul>
+                    @foreach($categories as $category)
+                        <li><a href="{{route('category', $category->code)}}">{{$category->__('name')}}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="col-md-6"><p>Самые популярные товары</p>
+               <ul>
+                   @foreach($bestProducts as $product)
+                       <li>
+                           <a href="{{route('product', [$product->category->code, $product->code])}}">
+                               {{$product->name}}
+                           </a>
+                       </li>
+                   @endforeach
+               </ul>
             </div>
         </div>
     </div>

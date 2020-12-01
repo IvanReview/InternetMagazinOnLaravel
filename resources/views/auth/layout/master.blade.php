@@ -39,7 +39,9 @@
                     <a class="navbar-brand" style="color: purple;" href="{{ route('products.index')}}">
                         Продукты
                     </a>
-
+                    <a class="navbar-brand" style="color: black;" href="{{ route('properties.index')}}">
+                        Свойства
+                    </a>
                     <a class="navbar-brand" style="color: #00b0e8;" href="{{ route('home') }}">
                         Заказы
                     </a>

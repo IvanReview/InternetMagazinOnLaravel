@@ -58,10 +58,9 @@ class BasketController extends Controller
         if ($success) {
             session()->flash('success', __('basket.order_confirmed'));
         } else {
-            session()->flash('warning', 'Mistake!!');
+            session()->flash('warning', 'Ошибка сохранения заказа!!');
         }
 
-        Order::eraseOrderSum();
         return redirect()->route('index');
     }
 

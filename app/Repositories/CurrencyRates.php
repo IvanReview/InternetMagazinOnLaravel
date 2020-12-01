@@ -29,7 +29,7 @@ class CurrencyRates
                     throw new Exception('Проблема с сервисом валют' . $currency->code);
                 } else {
                     $currency->update(['rate'=> $rates[$currency->code]]);
-                    $currency->touch();
+                    $currency->touch(); //обновляет время обновления записи
                 }
             }
         }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductsRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -31,7 +32,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories=Category::all();
-        return view('auth.products.create', compact('categories'));
+        $properties = Property::get();
+        return view('auth.products.create', compact('categories', 'properties'));
 
     }
 
@@ -84,12 +86,13 @@ class ProductController extends Controller
      * Отображение формы для редактирования продукта
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Product $product)
     {
         $categories = Category::get();
-        return view('auth.products.edit', compact('product', 'categories'));
+        $properties = Property::get();
+        return view('auth.products.edit', compact('product', 'categories', 'properties'));
     }
 
     /**
@@ -103,7 +106,7 @@ class ProductController extends Controller
     {
 
         //получаем данные из формы
-        $data=$request->all();
+        $data = $request->except('property_id');
         //если code не заполнено создаем автоматически
         if (empty($data['code'])) {
             $data['code'] = Str::slug($data['name'], '-');
@@ -125,6 +128,9 @@ class ProductController extends Controller
             //переназначение пути
             $data['image']=$path;
         }
+
+        /*dd($request->property_id);*/
+        $product->properties()->sync($request->property_id);
 
         //обновляеем данные
         $success=$product->update($data);

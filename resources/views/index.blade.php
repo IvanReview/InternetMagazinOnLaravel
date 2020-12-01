@@ -42,12 +42,12 @@
             </div>
         </form>
         <div class="row">
-            @foreach($products as $product)
-                @include('card', compact('product'))
+            @foreach($skus as $sku)
+                @include('card', compact('sku'))
             @endforeach
         </div>
 
-        {{ $products->appends([
+        {{ $skus->appends([
             'price_from' => request()->price_from,
             'price_to'   => request()->price_to,
             'hit'        => request()->hit,

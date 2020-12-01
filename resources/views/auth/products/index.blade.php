@@ -15,8 +15,9 @@
                 <th>Код</th>
                 <th>Название</th>
                 <th>Категория</th>
-                <th>Цена</th>
-                <th>Кол-во</th>
+               {{-- <th>Цена</th>
+                <th>Кол-во</th>--}}
+                <th>Кол-во товарных предложений</th>
                 <th>Действия</th>
             </tr>
             @foreach($products as $product)
@@ -25,13 +26,22 @@
                     <td>{{ $product->code }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name }}</td>
-                    <td>{{ $product->price }} Руб.</td>
-                    <td>{{ $product->count }}</td>
+                    {{--<td>{{ $product->price }} Руб.</td>
+                    <td>{{ $product->count }}</td>--}}
+                    <td></td>
                     <td>
                         <div class="btn-group" role="group">
                             <form action="{{ route('products.destroy', $product) }}" method="POST">
                                 <a class="btn btn-success" type="button"
-                                   href="{{ route('products.show', $product) }}">Открыть</a>
+                                   href="{{ route('products.show', $product) }}"
+                                >
+                                    Открыть
+                                </a>
+                                <a class="btn btn-warning" type="button"
+                                   href="{{ route('skus.index', $product) }}"
+                                >
+                                    Товарные предложения
+                                </a>
                                 <a class="btn btn-info" type="button"
                                    href="{{ route('products.edit', $product) }}">Редактировать</a>
                                 @csrf

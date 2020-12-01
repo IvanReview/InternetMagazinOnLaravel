@@ -94,6 +94,19 @@
                     </div>
                 </div>
                 <br>
+                <div class="form-group  row">
+                    <label for="category_id" class="col-sm-2 col-form-label">Свойство: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layout.error', ['fieldName' => 'property_id[]'])
+                        <select name="property_id[]" multiple class="form-control">
+                            @foreach($properties as $property)
+                                <option value="{{ $property->id }}"> {{ $property->name }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+
                 @foreach ([
                 'hit' => 'Хит',
                 'new' => 'Новинка',

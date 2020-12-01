@@ -67,3 +67,32 @@ div.form-inline form{
     margin-bottom: 40px;
 }
 b { font-weight: bold; }
+
+footer {
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: #f1efee;
+    background-color: #2a2730;
+}
+
+footer a {
+    color: #fff;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+div.container {
+    flex: 1 0 auto;
+}
+footer {
+    flex: 0 0 auto;
+}

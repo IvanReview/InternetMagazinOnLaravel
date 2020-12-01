@@ -27,8 +27,8 @@ class ProductsRequest extends FormRequest
             'name'          => 'required|min:5|max:100',
             'code'          => 'max:200|unique:products,code',
             'description'   => 'required|string|max:500|min:2',
-            'price'         => 'required|numeric|min:1',
-            'count'         => 'required|numeric|min:0'
+          /*  'price'         => 'required|numeric|min:1',
+            'count'         => 'required|numeric|min:0'*/
         ];
 
         //для обновления не тронутого поля unique, проверяем является ли роут update, исключаем текущий id из проверки

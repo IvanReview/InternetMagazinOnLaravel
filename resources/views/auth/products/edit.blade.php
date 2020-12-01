@@ -95,7 +95,26 @@
                 </div>
                 <br>
 
-                <div class="form-group row">
+                <div class="form-group  row">
+                    <label for="category_id" class="col-sm-2 col-form-label">Свойство: </label>
+                    <div class="col-sm-6">
+                        @include('auth.layout.error', ['fieldName' => 'property_id[]'])
+                        <select name="property_id[]" multiple class="form-control">
+                            @foreach($properties as $property)
+                                <option value="{{ $property->id }}"
+                                        @if($product->properties->contains($property->id ))
+                                            selected
+                                        @endif
+                                    >
+                                    {{ $property->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+
+               {{-- <div class="form-group row">
                     <label for="price" class="col-sm-2 col-form-label">Цена: </label>
                     <div class="col-sm-2">
                         @include('auth.layout.error', ['fieldName' => 'price'])
@@ -112,7 +131,7 @@
                                value="@isset($product){{ $product->count }}@endisset">
                     </div>
                 </div>
-                <br>
+                <br>--}}
 
                 @foreach ([
                 'hit' => 'Хит',

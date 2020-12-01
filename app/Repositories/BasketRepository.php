@@ -24,24 +24,24 @@ class BasketRepository
      */
     public function __construct($createOrder = false)
     {
-        $orderId = session('orderId');
+        $order = session('order');
 
         //Если корзина пустая
-        if (is_null($orderId) && $createOrder) {
+        if (is_null($order) && $createOrder) {
             //проверяем авторезирован ли пользователь и добавляем id в таблицу
             $data = [];
             if (Auth::check()) {
                 $data['user_id'] = Auth::id();
             }
-            //если сессия пустая добавляем запись в табл заказы(order) и запись в сессию
-            $this->order = Order::create($data);
-            session(['orderId' => $this->order->id]);
+
+            $data['currency_id'] = CurrencyConversion::getCurrentCurrencyFromSession()->id;
+
+            $this->order = new Order($data);
+
+            session(['order' => $this->order]);
         } else {
-
-            //если в корзине есть продукты или что-то добавлялось в корзину, выбирам объект модели(order) по id
-            $this->order =  Order::find($orderId);
+            $this->order = $order;
         }
-
     }
 
     /**
@@ -61,25 +61,22 @@ class BasketRepository
     public function addProduct(Product $product)
     {
         //проверяем содержится ли данный продукт в корзине
-        if ($this->order->products->contains($product->id)) {
-            //получаем доступ к промежуточной таблице и увеличиваем столбец count
-            $pivotRow = $this->order->products()->where('product_id', $product->id)->first()->pivot;
-            $pivotRow->count++;
-            //Если чило запрашиваемого товара больше чем есть
-            if ($pivotRow->count > $product->count){
+        if ($this->order->products->contains($product)) {
+            $pivotRow = $this->order->products->where('id',$product->id)->first();
+            if ($pivotRow->countInOrder >= $product->count){
                 return false;
             }
-            $pivotRow->update();
+            $pivotRow->countInOrder++;
 
         } else {
             if ($product->count == 0){
                 return false;
             }
             //добавление нового товара в корзину
-            $this->order->products()->attach($product->id);//вставка записи в промежуточную таблицу (order_id есть, product_id передаем в attach)
+            $product->countInOrder = 1;
+            $this->order->products->push($product);
         }
 
-        Order::changeFullSum($product->price);
         return true;
     }
 
@@ -89,35 +86,36 @@ class BasketRepository
      */
     public function deleteProduct(Product $product)
     {
-        if($this->order->products->contains($product->id)){
-            //получаем доступ к промежуточной таблице
-            $pivotRow = $this->order->products()->where('product_id', $product->id)->first()->pivot;
-            if ($pivotRow->count < 2){
-                $this->order->products()->detach($product->id);//находим нужный объект модели и открепляем запись в промежуточной табл order_product по $productId
+        if($this->order->products->contains($product)){
+            $pivotRow = $this->order->products->where('id',$product->id)->first();
+
+            if ($pivotRow->countInOrder < 2){
+                $this->order->products->pop($product);
             }
             else{
-                $pivotRow->count--;
-                $pivotRow->update();
+                $pivotRow->countInOrder--;
             }
-
         }
 
-        Order::changeFullSum(-$product->price);
     }
 
     //проверка доступности количества товара
     public function countAvailable($updateCount = false)
     {
+        $products = collect([]);
         foreach ($this->order->products as $productInOrder){
-            //количество товара в заказе
-            $count = $this->order->products()->where('product_id', $productInOrder->id)->first()->pivot->count;
-            //если число товаров в заказе больше чем есть товаров на складе
-            if ($count > $productInOrder->count){
+
+            $product = Product::find($productInOrder->id);
+            if ($productInOrder->countInOrder > $product->count){
                 return false;
             }
             if ($updateCount){
-                $productInOrder->count = $productInOrder->count - $count;
-                $productInOrder->save();
+                $product->count = $product->count - $productInOrder->countInOrder;
+                $products->push($product);
+            }
+
+            if ($updateCount){
+                $products->map->save();
             }
         }
         return true;
@@ -131,10 +129,11 @@ class BasketRepository
             return false;
         }
 
+        $this->order->saveOrder($name, $phone, $email);
         //Отправка почты в OrderCreated формируется вид сообщения
         Mail::to($email)->send(new OrderCreated($name, $this->getOrder()));
 
-        return $this->order->saveOrder($name, $phone, $email);
+        return true;
     }
 
 

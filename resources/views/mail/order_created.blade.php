@@ -3,11 +3,10 @@
 <table>
     <tbody>
          @foreach($order->products as $product)
-             <td><span class="badge">{{$product->pivot->count}}</span>
+             <td><span class="badge">{{$product->countInOrder}}</span>
              <td>{{$product->__('name')}}</td>
              <td>{{$product->price}} ₽</td>
-              Общая стоимость
-             <td>{{$product->getPriceForCount()}}</td>
+             <td>Общая стоимость: {{$product->getPriceForCount()}}</td>
          @endforeach
     </tbody>
 </table>

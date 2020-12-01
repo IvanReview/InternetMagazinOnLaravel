@@ -3,7 +3,7 @@
 
 @section('content')
     <h1 class="orderForm">Подтвердите заказ:</h1>
-    <h5>Общая стоимость: <b>{{$order->calculateFullSum()}} ₽.</b></h5>
+    <h5>Общая стоимость: <b>{{$order->getFullSum()}} ₽.</b></h5>
     <p>Укажите свои имя и номер телефона, чтобы наш менеджер мог с вами связаться:</p>
     <br>
     <div class="container">

@@ -49,7 +49,10 @@ Route::middleware(['set_locale'])->group(function () {
                     Route::get('/orders/execute/{orders}', 'OrdersController@executeOrder')->name('orders.execute');
 
                     Route::resource('products', 'ProductController');
+                    Route::resource('products/{product}/skus', 'SkuController');
                     Route::resource('categories', 'CategoryController');
+                    Route::resource('properties', 'PropertyController');
+                    Route::resource('properties/{property}/property-options', 'PropertyOptionController');
                 });
             });
 
@@ -74,7 +77,7 @@ Route::middleware(['set_locale'])->group(function () {
     Route::get('/categories','MainController@categories')->name('categories');
     Route::get('/{category}','MainController@category')->name('category');
     Route::post('subscription/{product}','MainController@subscribe')->name('subscription');
-    Route::get('/{category}/{product}','MainController@product')->name('product');
+    Route::get('/{category}/{product}/{sku}','MainController@sku')->name('sku');
 
 });
 

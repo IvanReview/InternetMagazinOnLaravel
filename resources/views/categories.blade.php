@@ -11,5 +11,4 @@
                 <p style="color: #606f7b ">{{$category->__('description')}}</p>
             </div>
         @endforeach
-
 @endsection
